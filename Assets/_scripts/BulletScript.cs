@@ -12,6 +12,7 @@ public class BulletScript : MonoBehaviour
   public float fuseTime = 2f;
   public float explodeDmg = 10f;
   public float explodeRadius = 5f;
+  private FXManagerScript fxManager;
   // Start is called before the first frame update
   void Start()
   {
@@ -21,6 +22,7 @@ public class BulletScript : MonoBehaviour
     {
       StartCoroutine(TimeBomb());
     }
+    fxManager = FindObjectOfType(typeof(FXManagerScript)) as FXManagerScript;
   }
 
   void OnCollisionEnter(Collision collision)
@@ -39,15 +41,17 @@ public class BulletScript : MonoBehaviour
     yield return new WaitForSeconds(fuseTime);
     // explode
     Debug.Log("boom");
+    fxManager.CreateExplosion(transform.position.x, transform.position.y);
 
-    RaycastHit[] hits = Physics.SphereCastAll(transform.position, explodeRadius, transform.forward, explodeRadius * 2);
+    Collider[] hits = Physics.OverlapSphere(transform.position, explodeRadius);
     if (hits != null)
     {
-      foreach (RaycastHit hit in hits)
+      foreach (Collider hit in hits)
       {
+
         if (hit.transform.tag == "asteroid")
         {
-          hit.collider.SendMessage("ApplyDmg", (hit.distance / explodeRadius) * explodeDmg);
+          hit.SendMessage("ApplyDmg", explodeDmg);
         }
       }
     }

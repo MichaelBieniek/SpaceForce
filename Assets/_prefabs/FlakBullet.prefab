@@ -109,12 +109,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c505dbb2b66378a47a8a51245dc9de82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletDmg: 20
+  bulletDmg: 30
   bulletSpeed: 5
   hasDelayedEffect: 1
-  fuseTime: 2
-  explodeDmg: 10
-  explodeRadius: 5
+  fuseTime: 0.9
+  explodeDmg: 70
+  explodeRadius: 2
 --- !u!54 &7518468486475557516
 Rigidbody:
   m_ObjectHideFlags: 0
